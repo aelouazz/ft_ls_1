@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_ls.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yoelguer <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/30 21:44:16 by yoelguer          #+#    #+#             */
-/*   Updated: 2020/01/31 00:05:48 by yoelguer         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef FT_LS_H
 # define FT_LS_H
 
@@ -28,6 +16,7 @@ typedef struct s_node
     char    *gid;
     char    *time;
     char    *link;
+    char    *sizee;
     int     size;
     int     blink;
     struct  s_node  *next;

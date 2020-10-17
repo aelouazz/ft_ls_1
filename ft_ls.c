@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_ls.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yoelguer <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/30 21:49:47 by yoelguer          #+#    #+#             */
-/*   Updated: 2020/01/30 21:49:51 by yoelguer         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "ft_ls.h"
 
@@ -53,6 +42,7 @@ void    ft_get_perm(t_node *nd)
         nd->perm[8] = 'w';
     if (data.st_mode & S_IXOTH)
         nd->perm[9] = 'x';
+
 }
 
 void    ft_alloc(t_node **nd)
@@ -60,6 +50,13 @@ void    ft_alloc(t_node **nd)
     *nd = (t_node*)malloc(sizeof(t_node));
     (*nd)->perm = ft_strdup("----------");
     (*nd)->next = NULL;
+}
+void    ft_size(t_node *nd)
+{
+     struct stat data;
+     stat(nd->sizee, &data);
+    
+    nd->size = data.st_atime;
 }
 
 t_node      *ft_alloc_list(char *path)
@@ -76,6 +73,7 @@ t_node      *ft_alloc_list(char *path)
     {
         nd->name = ft_strdup(dir->d_name);
         ft_get_perm(nd);
+        ft_size(nd);
         ft_alloc(&nd->next);
         nd = nd->next;
     }
