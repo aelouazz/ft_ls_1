@@ -43,7 +43,7 @@ void	get_flags(char **av, t_arg **arg)
 		{
 			if (av[j][i] == '-' && check_flag(&av[j][i + 1]))
 			{
-				
+
 				(*arg) = (*arg)->next;
 			}
 			i++;
@@ -70,7 +70,7 @@ int     main(int ac, char **av)
 	{
 		nd = ft_alloc_list(".");
 		while (nd->next)
-	    {	
+	    {
 			if (nd->name[0] == '.')
 			 	nd = nd->next;
 			else
@@ -99,11 +99,11 @@ int     main(int ac, char **av)
 	        ft_putstr("   ");
 			ft_putnbr(nd->size);
 	        ft_putstr("   ");
-	        ft_putendl(nd->name);
+			ft_putendl(nd->name);
 	        nd = nd->next;
 	    }
 		ft_putstr("\n");
 	}
-	
+
 	return (0);
 }

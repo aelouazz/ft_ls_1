@@ -6,13 +6,13 @@ char    ft_file_type(size_t mode)
     if (S_ISFIFO(mode))
         return ('p');
     else if (S_ISSOCK(mode))
-        return ('s');  
+        return ('s');
     else if (S_ISLNK(mode))
-        return ('l');  
+        return ('l');
     else if (S_ISBLK(mode))
-        return ('b');  
+        return ('b');
     else if (S_ISDIR(mode))
-        return ('d');  
+        return ('d');
     else if (S_ISCHR(mode))
         return ('c');
     return ('-');
@@ -30,7 +30,7 @@ void    ft_get_perm(t_node *nd)
         nd->perm[2] = 'w';
     if (data.st_mode & S_IXUSR)
         nd->perm[3] = 'x';
-    if (data.st_mode & S_IRUSR)
+    if (data.st_mode & S_IRGRP)
         nd->perm[4] = 'r';
     if (data.st_mode & S_IWGRP)
         nd->perm[5] = 'w';
@@ -55,8 +55,7 @@ void    ft_size(t_node *nd)
 {
      struct stat data;
      stat(nd->sizee, &data);
-    
-    nd->size = data.st_atime;
+    nd->size = data.st_size;
 }
 
 t_node      *ft_alloc_list(char *path)
