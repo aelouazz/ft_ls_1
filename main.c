@@ -58,18 +58,9 @@ int		path_or_flags(char *av)
 		return (0);
 	return (1);
 }
-
-int     main(int ac, char **av)
+void	ft_print(t_node  *nd)
 {
-	t_arg *args;
-	t_node  *nd;
-
- 	args = (t_arg*)malloc(sizeof(t_arg));
-	args->flag = ft_strdup("......");
-	if (ac < 2)
-	{
-		nd = ft_alloc_list(".");
-		while (nd->next)
+	while (nd->next)
 	    {
 			if (nd->name[0] == '.')
 			 	nd = nd->next;
@@ -81,6 +72,34 @@ int     main(int ac, char **av)
 			}
 		}
 		ft_putstr("\n");
+}
+
+void	ft_print_ls(t_node  *nd)
+{
+		ft_putendl("total ");
+		while (nd->next)
+	    {
+	        ft_putstr(nd->perm);
+	        ft_putstr("   ");
+			ft_putnbr(nd->size);
+	        ft_putstr("   ");
+			ft_putendl(nd->name);
+	        nd = nd->next;
+	    }
+		ft_putstr("\n");
+}
+
+int     main(int ac, char **av)
+{
+	t_arg *args;
+	t_node  *nd;
+
+ 	args = (t_arg*)malloc(sizeof(t_arg));
+	args->flag = ft_strdup("......");
+	if (ac < 2)
+	{
+		nd = ft_alloc_list(".");
+		ft_print(nd);
 	}
 	else
 	{
@@ -92,17 +111,7 @@ int     main(int ac, char **av)
 			}
 		else
 	    	nd = ft_alloc_list(av[1]);
-			ft_putendl("total ");
-		while (nd->next)
-	    {
-	        ft_putstr(nd->perm);
-	        ft_putstr("   ");
-			ft_putnbr(nd->size);
-	        ft_putstr("   ");
-			ft_putendl(nd->name);
-	        nd = nd->next;
-	    }
-		ft_putstr("\n");
+			ft_print_ls(nd);
 	}
 
 	return (0);

@@ -22,7 +22,7 @@ void    ft_get_perm(t_node *nd)
 {
     struct stat data;
 
-    lstat(nd->name, &data);
+    lstat(nd->path, &data);
     nd->perm[0] = ft_file_type(data.st_mode);
     if (data.st_mode & S_IRUSR)
         nd->perm[1] = 'r';
@@ -51,10 +51,10 @@ void    ft_alloc(t_node **nd)
     (*nd)->perm = ft_strdup("----------");
     (*nd)->next = NULL;
 }
-void    ft_size(t_node *nd, struct dirent *dir)
+void    ft_size(t_node *nd)
 {
-     struct stat data;
-     stat(dir->d_name, &data);
+    struct stat data;
+    lstat(nd->path, &data);
     nd->size = data.st_size;
 }
 
@@ -68,13 +68,14 @@ t_node      *ft_alloc_list(char *path)
     ft_alloc(&nd);
     head = nd;
     dr = opendir(path);
-    ft_putstr(path);
     while ((dir = readdir(dr)) != NULL)
     {
         nd->name = ft_strdup(dir->d_name);
-        nd->path = ft_strcat(path, dir->d_name);
+        if  (ft_strcmp(path, ".") == 0)
+           nd->path = ft_strjoin(path, "/");
+        nd->path = ft_strjoin(path, dir->d_name);
         ft_get_perm(nd);
-        ft_size(nd, dir);
+        ft_size(nd);
         ft_alloc(&nd->next);
         nd = nd->next;
     }
