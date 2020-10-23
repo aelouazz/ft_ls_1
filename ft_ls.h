@@ -16,7 +16,6 @@ typedef struct s_node
     char    *gid;
     char    *time;
     char    *link;
-    char    *sizee;
     int     size;
     int     blink;
     struct  s_node  *next;

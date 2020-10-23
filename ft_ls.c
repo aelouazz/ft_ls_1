@@ -51,10 +51,10 @@ void    ft_alloc(t_node **nd)
     (*nd)->perm = ft_strdup("----------");
     (*nd)->next = NULL;
 }
-void    ft_size(t_node *nd)
+void    ft_size(t_node *nd, struct dirent *dir)
 {
      struct stat data;
-     stat(nd->sizee, &data);
+     stat(dir->d_name, &data);
     nd->size = data.st_size;
 }
 
@@ -68,11 +68,13 @@ t_node      *ft_alloc_list(char *path)
     ft_alloc(&nd);
     head = nd;
     dr = opendir(path);
+    ft_putstr(path);
     while ((dir = readdir(dr)) != NULL)
     {
         nd->name = ft_strdup(dir->d_name);
+        nd->path = ft_strcat(path, dir->d_name);
         ft_get_perm(nd);
-        ft_size(nd);
+        ft_size(nd, dir);
         ft_alloc(&nd->next);
         nd = nd->next;
     }
