@@ -76,11 +76,15 @@ void	ft_print(t_node  *nd)
 
 void	ft_print_ls(t_node  *nd)
 {
-		ft_putendl("total ");
+		ft_putstr("total ");
+		ft_putnbr(nd->total);
+		ft_putendl("");
 		while (nd->next)
 	    {
 	        ft_putstr(nd->perm);
 	        ft_putstr("   ");
+			ft_putnbr(nd->nb_links);
+			ft_putstr("   ");
 			ft_putnbr(nd->size);
 	        ft_putstr("   ");
 			ft_putendl(nd->name);

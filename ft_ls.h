@@ -10,6 +10,7 @@
 
 typedef struct s_node
 {
+    int     total;
     char    *name;
     char    *path;
     char    *perm;

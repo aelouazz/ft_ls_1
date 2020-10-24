@@ -58,9 +58,12 @@ void    ft_size(t_node *nd)
     nd->size = data.st_size;
 }
 
-void    ft_get_links(t_node *nd)
+int    ft_get_links(t_node *nd)
 {
-    nd->nb_links = 
+    struct stat data;
+    lstat(nd->path, &data);
+    nd->nb_links = data.st_nlink;
+    return ((int)data.st_blocks);
 }
 
 t_node      *ft_alloc_list(char *path)
@@ -72,6 +75,7 @@ t_node      *ft_alloc_list(char *path)
 
     ft_alloc(&nd);
     head = nd;
+    head->total = 0;
     if (!(dr = opendir(path)))
         return NULL;
     while ((dir = readdir(dr)) != NULL)
@@ -81,7 +85,7 @@ t_node      *ft_alloc_list(char *path)
         nd->path = ft_strjoin(nd->path, dir->d_name);
         ft_get_perm(nd);
         ft_size(nd);
-        ft_get_links(nd);
+        head->total += ft_get_links(nd);
         ft_alloc(&nd->next);
         nd = nd->next;
     }
