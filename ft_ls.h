@@ -6,6 +6,8 @@
 # include <sys/stat.h>
 # include <unistd.h>
 # include <stdio.h>
+#include <pwd.h>
+#include <grp.h>
 # include "libft/libft.h"
 
 typedef struct s_node
@@ -14,6 +16,8 @@ typedef struct s_node
     char    *name;
     char    *path;
     char    *perm;
+    char    *user;
+    char    *group;
     char    *uid;
     char    *gid;
     char    *time;

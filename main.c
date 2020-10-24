@@ -85,6 +85,10 @@ void	ft_print_ls(t_node  *nd)
 	        ft_putstr("   ");
 			ft_putnbr(nd->nb_links);
 			ft_putstr("   ");
+			ft_putstr(nd->user);
+			ft_putstr("   ");
+			ft_putstr(nd->group);
+			ft_putstr("   ");
 			ft_putnbr(nd->size);
 	        ft_putstr("   ");
 			ft_putendl(nd->name);
