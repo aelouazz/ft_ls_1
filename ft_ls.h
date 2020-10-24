@@ -5,6 +5,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <unistd.h>
+# include <stdio.h>
 # include "libft/libft.h"
 
 typedef struct s_node
@@ -16,8 +17,8 @@ typedef struct s_node
     char    *gid;
     char    *time;
     char    *link;
+    int     nb_links;
     int     size;
-    int     blink;
     struct  s_node  *next;
 }              t_node;
 
