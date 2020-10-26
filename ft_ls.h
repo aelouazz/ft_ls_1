@@ -22,17 +22,12 @@ typedef struct s_node
     char    *gid;
     char    *time;
     char    *link;
+    char    *flags;
     int     nb_links;
     int     size;
     struct  s_node  *next;
 }              t_node;
 
-typedef struct s_arg
-{
-    char    *flag;
-    char    *name;
-    struct  s_arg  *next;
-}              t_arg;
 
 void    ft_alloc(t_node **nd);
 void    ft_get_perm(t_node *nd);
