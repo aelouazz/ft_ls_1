@@ -6,8 +6,10 @@
 # include <sys/stat.h>
 # include <unistd.h>
 # include <stdio.h>
-#include <pwd.h>
-#include <grp.h>
+
+# include <pwd.h>
+# include <grp.h>
+
 # include "libft/libft.h"
 
 typedef struct s_node

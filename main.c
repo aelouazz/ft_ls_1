@@ -2,18 +2,19 @@
 #include "ft_ls.h"
 #include <stdio.h>
 
-void		error_msg(char c)
+void        error_msg(char c)
 {
 	ft_putstr_fd("ft_ls: illegal option : ",2);
 	ft_putchar_fd(c,2);
 	ft_putendl_fd(" :\nusage: ft_ls [-latrR] [file ...]\n", 2);
 	exit(0);
 }
-void		error_msg_diroctory(char *str)
+void        error_msg_diroctory(char *str)
 {
 	ft_putstr_fd(str,2);
 	ft_putstr_fd(": No such file or directory",2);
 }
+
 static int  check_flag(char *str)
 {
 	int i;
@@ -62,28 +63,17 @@ void	get_flags(char **av, t_node  *nd)
 	}
 	nd->flags[k] = '\0';
 }
-int			path_or_flags(char **av)
-{
-	int i;
-	DIR *dr;
 
-	i = 2;
-	if (!(dr = opendir(av[1])))
-		{
-			closedir(dr);
-			while (opendir(av[i]))
+int		path_or_flags(char *av)
+{
+	if ((opendir(av) == NULL))
 			{
-			if ((opendir(av[i]) == NULL))
-			{
-				error_msg_diroctory(av[i]);
+				error_msg_diroctory(av);
+				return (0);
 			}
-			closedir(dr);
-			i++;
-			}
-			return(0);
-		}
 	return (1);
 }
+
 void	ft_print(t_node  *nd)
 {
 	while (nd->next)
@@ -100,7 +90,7 @@ void	ft_print(t_node  *nd)
 		ft_putstr("\n");
 }
 
-void		ft_print_a(t_node  *nd)
+void	ft_print_a(t_node  *nd)
 {
 	while (nd->next)
 	    {
@@ -111,15 +101,15 @@ void		ft_print_a(t_node  *nd)
 		ft_putstr("\n");
 }
 
-void		ft_print_ls(t_node  *nd)
+void	ft_print_ls(t_node  *nd)
 {
 		ft_putstr("total ");
 		ft_putnbr(nd->total);
 		ft_putendl("");
 		while (nd->next)
-		{
-			ft_putstr(nd->perm);
-			ft_putstr("   ");
+	    {
+	        ft_putstr(nd->perm);
+	        ft_putstr("   ");
 			ft_putnbr(nd->nb_links);
 			ft_putstr("   ");
 			ft_putstr(nd->user);
@@ -127,18 +117,18 @@ void		ft_print_ls(t_node  *nd)
 			ft_putstr(nd->group);
 			ft_putstr("   ");
 			ft_putnbr(nd->size);
-			ft_putstr("   ");
+	        ft_putstr("   ");
 			ft_putendl(nd->name);
-			nd = nd->next;
-		}
+	        nd = nd->next;
+	    }
 		ft_putstr("\n");
 }
 
-int			main(int ac, char **av)
+int     main(int ac, char **av)
 {
 	int 	i;
 	t_node  *nd;
-
+	
 	nd = NULL;
 	i = 1;
 	if (ac < 2)
@@ -148,22 +138,22 @@ int			main(int ac, char **av)
 	}
 	else
 	{
-		if (path_or_flags(av) == 0)
+		if (path_or_flags(av[1]) == 0)
 			{
 				while (i < ac)
 					{
-						if (av[i][0] != '-' || (av[i][0] == '-' && check_flag(&av[1][1]) != 0)  ||
+						if (av[i][0] != '-' || (av[i][0] == '-' && check_flag(&av[1][1]) != 0)  || 
 						(av[i][0] == '-'  && av[i][1] == '\0'))
 							error_msg(av[1][0]);
 						else
 							i++;
-					}
+					}	
 				nd = ft_alloc_list(".");
-				get_flags(av, nd);
+				get_flags(av, nd);	
 				ft_print_ls(nd);
 			}
 		else
-			{
+	    	{
 				nd = ft_alloc_list(av[1]);
 				ft_print_ls(nd);
 			}
