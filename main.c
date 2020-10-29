@@ -77,13 +77,13 @@ int		path_or_flags(char *av)
 void	ft_print(t_node  *nd)
 {
 	while (nd->next)
-	    {
+		{
 			if (nd->name[0] == '.')
 			 	nd = nd->next;
 			else
 			{
 			ft_putstr(nd->name);
-	        ft_putstr("   ");
+			ft_putstr("   ");
 			nd = nd->next;
 			}
 		}
@@ -117,10 +117,10 @@ void	ft_print_ls(t_node  *nd)
 			ft_putstr(nd->group);
 			ft_putstr("   ");
 			ft_putnbr(nd->size);
-	        ft_putstr("   ");
+			ft_putstr("   ");
 			ft_putendl(nd->name);
-	        nd = nd->next;
-	    }
+			nd = nd->next;
+		}
 		ft_putstr("\n");
 }
 
@@ -128,7 +128,7 @@ int     main(int ac, char **av)
 {
 	int 	i;
 	t_node  *nd;
-	
+
 	nd = NULL;
 	i = 1;
 	if (ac < 2)
@@ -142,18 +142,18 @@ int     main(int ac, char **av)
 			{
 				while (i < ac)
 					{
-						if (av[i][0] != '-' || (av[i][0] == '-' && check_flag(&av[1][1]) != 0)  || 
+						if (av[i][0] != '-' || (av[i][0] == '-' && check_flag(&av[1][1]) != 0)  ||
 						(av[i][0] == '-'  && av[i][1] == '\0'))
 							error_msg(av[1][0]);
 						else
 							i++;
-					}	
+					}
 				nd = ft_alloc_list(".");
-				get_flags(av, nd);	
+				get_flags(av, nd);
 				ft_print_ls(nd);
 			}
 		else
-	    	{
+			{
 				nd = ft_alloc_list(av[1]);
 				ft_print_ls(nd);
 			}
