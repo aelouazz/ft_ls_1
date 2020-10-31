@@ -150,24 +150,60 @@ void	ft_print_a(t_node  *nd)
 		}
 		ft_putstr("\n");
 }
-
+size_t	biggest_link(t_node  *nd)
+{
+	size_t i;
+	
+	i = 0;
+	while (nd->next)
+	{
+		if (i <= ft_strlen(ft_itoa(nd->nb_links)))
+			i = ft_strlen(ft_itoa(nd->nb_links));
+			nd = nd->next;
+	}
+	return (i);
+}
+size_t	biggest_size(t_node  *nd)
+{
+	size_t i;
+	
+	i = 0;
+	while (nd->next)
+	{
+		if (i <= ft_strlen(ft_itoa(nd->size)))
+			i = ft_strlen(ft_itoa(nd->size));
+			nd = nd->next;
+	}
+	return (i);
+}
 void	ft_print_ls(t_node  *nd)
 {
+		size_t nb;
+		size_t sz;
+		size_t i;
+
+		nb = biggest_link(nd);
+		sz = biggest_size(nd);
 		ft_putstr("total ");
 		ft_putnbr(nd->total);
 		ft_putendl("");
 		while (nd->next)
 	    {
+			i = 0;
 	        ft_putstr(nd->perm);
-	        ft_putstr("   ");
+	        while ((i++ + ft_strlen(ft_itoa(nd->nb_links))) <= nb)
+				ft_putstr(" ");
 			ft_putnbr(nd->nb_links);
-			ft_putstr("   ");
+			ft_putstr(" ");
 			ft_putstr(nd->user);
-			ft_putstr("   ");
+			ft_putstr(" ");
 			ft_putstr(nd->group);
-			ft_putstr("   ");
+			i = 0;
+			while ((i++ + ft_strlen(ft_itoa(nd->size))) <= nb)
+				ft_putstr(" ");
 			ft_putnbr(nd->size);
-	        ft_putstr("   ");
+			ft_putchar(nd->SZ);
+	        ft_putstr(" ");
 			ft_putendl(nd->name);
 	        nd = nd->next;
 	    }

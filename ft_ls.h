@@ -39,7 +39,8 @@ typedef struct  s_node
     char        *flags;
     char        *link;
     int         nb_links;
-    int         size;
+    float       size;
+    char        SZ;
     struct      s_node  *next;
 }               t_node;
 

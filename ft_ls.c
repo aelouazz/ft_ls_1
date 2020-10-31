@@ -55,7 +55,21 @@ void    ft_size(t_node *nd)
 {
     struct stat data;
     lstat(nd->path, &data);
-    nd->size = data.st_size;
+    if (data.st_size < 1024)
+        {
+            nd->size = data.st_size;
+            nd->SZ = 'B';
+        }
+    if (data.st_size > 1024 && data.st_size < 1048576)
+        {
+            nd->size = data.st_size / 1000;
+            nd->SZ = 'K';
+        }
+     if (data.st_size > 1048576 && data.st_size < 1073741824)
+        {
+            nd->size = data.st_size / (1000*1000);
+            nd->SZ = 'G';
+        }
 }
 
 int    ft_get_stats(t_node *nd)
