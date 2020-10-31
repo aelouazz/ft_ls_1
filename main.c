@@ -96,7 +96,7 @@ size_t		ft_biggest_name_charachters(t_node *nd)
 		}
 	return (count);
 }
-void	ft_print(t_node  *nd)
+void	ft_print(t_node  *nd, int ac)
 {
 	size_t i;
 	int		j;
@@ -117,7 +117,7 @@ void	ft_print(t_node  *nd)
 					ft_putstr(" ");
 					i++;
 				}
-				if (j % 6 == 0)
+				if (j % 8 == 0  && ac >= 2)
 					ft_putstr("\n");
 				j++;
 				nd = nd->next;
@@ -143,7 +143,7 @@ void	ft_print_a(t_node  *nd)
 				ft_putstr(" *");
 				i++;
 			}
-			if (j % 6 == 0)
+			if (j % 8 == 0)
 					ft_putstr("\n");
 			j++;
 			nd = nd->next;
@@ -184,7 +184,7 @@ int     main(int ac, char **av)
 	if (ac < 2)
 	{
 		nd = ft_alloc_list(".");
-		ft_print(nd);
+		ft_print(nd, ac);
 	}
 	else
 	{
@@ -206,7 +206,7 @@ int     main(int ac, char **av)
 		else
 	    	{
 				nd = ft_alloc_list(av[1]);
-				ft_print(nd);
+				ft_print(nd, ac);
 			}
 	}
 	return (0);
