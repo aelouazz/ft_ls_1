@@ -12,7 +12,7 @@ void        error_msg(char c)
 void        error_msg_diroctory(char *str)
 {
 	ft_putstr_fd(str,2);
-	ft_putstr_fd(": No such file or directory",2);
+	ft_putstr_fd(": No such file or directory\n",2);
 }
 
 static int  check_flag(char *str)
@@ -20,6 +20,8 @@ static int  check_flag(char *str)
 	int i;
 
 	i = 0;
+	if ((opendir(str) != NULL))
+		return (0);
 	while (str[i])
 	{
 		if (str[i] == 'a' || str[i] == 'l' ||
@@ -64,27 +66,61 @@ void	get_flags(char **av, t_node  *nd)
 	nd->flags[k] = '\0';
 }
 
-int		path_or_flags(char *av)
+int		path_or_flags(char **av)
 {
-	if ((opendir(av) == NULL))
-			{
-				error_msg_diroctory(av);
-				return (0);
-			}
-	return (1);
-}
+	int i;
 
+	i = 1;
+	if ((opendir(av[i]) != NULL))
+			{
+				while ((opendir(av[i]) != NULL))
+					{
+						i++;
+						if ((opendir(av[i]) == NULL) && av[i])
+							error_msg_diroctory(av[i]);
+					}
+				return (1);
+			}
+	return (0);
+}
+size_t		ft_biggest_name_charachters(t_node *nd)
+{
+	size_t	count;
+
+	count = 0;
+	while (nd->next)
+	    {
+			if (count < ft_strlen(nd->name))
+				count = ft_strlen(nd->name);
+			nd = nd->next;
+		}
+	return (count);
+}
 void	ft_print(t_node  *nd)
 {
+	size_t i;
+	int		j;
+	size_t biggest;
+
+	j = 1;
+	biggest = ft_biggest_name_charachters(nd);
 	while (nd->next)
-		{
+	    {
 			if (nd->name[0] == '.')
 			 	nd = nd->next;
 			else
 			{
-			ft_putstr(nd->name);
-			ft_putstr("   ");
-			nd = nd->next;
+				i = 0;
+				ft_putstr(nd->name);
+				while (ft_strlen(nd->name) + i <= biggest)
+				{
+					ft_putstr(" ");
+					i++;
+				}
+				if (j % 6 == 0)
+					ft_putstr("\n");
+				j++;
+				nd = nd->next;
 			}
 		}
 		ft_putstr("\n");
@@ -92,10 +128,24 @@ void	ft_print(t_node  *nd)
 
 void	ft_print_a(t_node  *nd)
 {
+	size_t i;
+	int		j;
+	size_t biggest;
+
+	j = 1;
+	biggest = ft_biggest_name_charachters(nd);
 	while (nd->next)
 	    {
+			i = 0;
 			ft_putstr(nd->name);
-	        ft_putstr("   ");
+			while (ft_strlen(nd->name) + i <= biggest)
+			{
+				ft_putstr(" *");
+				i++;
+			}
+			if (j % 6 == 0)
+					ft_putstr("\n");
+			j++;
 			nd = nd->next;
 		}
 		ft_putstr("\n");
@@ -117,10 +167,10 @@ void	ft_print_ls(t_node  *nd)
 			ft_putstr(nd->group);
 			ft_putstr("   ");
 			ft_putnbr(nd->size);
-			ft_putstr("   ");
+	        ft_putstr("   ");
 			ft_putendl(nd->name);
-			nd = nd->next;
-		}
+	        nd = nd->next;
+	    }
 		ft_putstr("\n");
 }
 
@@ -128,7 +178,7 @@ int     main(int ac, char **av)
 {
 	int 	i;
 	t_node  *nd;
-
+	
 	nd = NULL;
 	i = 1;
 	if (ac < 2)
@@ -138,28 +188,27 @@ int     main(int ac, char **av)
 	}
 	else
 	{
-		if (path_or_flags(av[1]) == 0)
+		if (path_or_flags(av) == 0)
 			{
 				while (i < ac)
 					{
-						if (av[i][0] != '-' || (av[i][0] == '-' && check_flag(&av[1][1]) != 0)  ||
+						if (av[i][0] != '-' || (av[i][0] == '-' && check_flag(&av[i][1]) != 0)  || 
 						(av[i][0] == '-'  && av[i][1] == '\0'))
-							error_msg(av[1][0]);
+							error_msg(av[i][0]);
 						else
 							i++;
 					}
+				
 				nd = ft_alloc_list(".");
 				get_flags(av, nd);
 				ft_print_ls(nd);
 			}
 		else
-			{
+	    	{
 				nd = ft_alloc_list(av[1]);
-				ft_print_ls(nd);
+				ft_print(nd);
 			}
 	}
-	ft_putendl("*****************");
-	ft_putendl(nd->flags);
 	return (0);
 }
 

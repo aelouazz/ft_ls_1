@@ -1,7 +1,8 @@
 
 SRC		= 	main.c \
 			ft_ls.c \
-		
+			flags.c \
+			
 OBJ		= $(SRC:.c=.o)
 
 NAME 	= ft_ls
