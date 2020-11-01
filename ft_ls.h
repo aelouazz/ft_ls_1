@@ -36,14 +36,16 @@ typedef struct  s_node
     char        *uid;
     char        *gid;
     char        *time;
+    char        *date;
     char        *flags;
     char        *link;
+    int         year;
     int         nb_links;
     float       size;
     char        SZ;
     struct      s_node  *next;
 }               t_node;
-
+char            *ctime(const time_t *);
 void            ft_flags(t_flags	*flag);
 void            ft_alloc(t_node **nd);
 void            ft_get_perm(t_node *nd);

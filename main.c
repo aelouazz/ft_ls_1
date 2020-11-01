@@ -196,14 +196,20 @@ void	ft_print_ls(t_node  *nd)
 			ft_putnbr(nd->nb_links);
 			ft_putstr(" ");
 			ft_putstr(nd->user);
-			ft_putstr(" ");
+			ft_putstr("  ");
 			ft_putstr(nd->group);
 			i = 0;
+			ft_putstr(" ");
 			while ((i++ + ft_strlen(ft_itoa(nd->size))) <= nb)
 				ft_putstr(" ");
 			ft_putnbr(nd->size);
 			ft_putchar(nd->SZ);
-	        ft_putstr(" ");
+			ft_putstr(" ");
+			if ( nd->year != 2020)
+				ft_putnbr(nd->year);
+			else
+				ft_putstr(nd->date);
+			ft_putstr(" ");
 			ft_putendl(nd->name);
 	        nd = nd->next;
 	    }
@@ -242,7 +248,7 @@ int     main(int ac, char **av)
 		else
 	    	{
 				nd = ft_alloc_list(av[1]);
-				ft_print(nd, ac);
+				ft_print_ls(nd);
 			}
 	}
 	return (0);

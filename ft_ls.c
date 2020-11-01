@@ -71,19 +71,38 @@ void    ft_size(t_node *nd)
             nd->SZ = 'G';
         }
 }
+int     ft_date(t_node *nd)
+{
+    int     i;
+    int     j;
+    int     year;
 
+    i = 4;
+    j = 0;
+    nd->date = ft_strdup("------------"); 
+    while (nd->time[i] && i < 16)
+    {
+       nd->date[j] =  nd->time[i];
+       i++;
+       j++;
+    }
+    year = ft_atoi(&nd->time[20]);
+    return (year);
+}
 int    ft_get_stats(t_node *nd)
 {
     struct stat data;
     struct passwd *user;
     struct group *grp;
+
     lstat(nd->path, &data);
     user = getpwuid(data.st_uid);
     grp = getgrgid(data.st_gid);
     nd->nb_links = data.st_nlink;
-    nd->user = user->pw_name;
-    nd->group = grp->gr_name;
-
+    nd->user = ft_strdup(user->pw_name);
+    nd->group = ft_strdup(grp->gr_name);
+    nd->time = ctime(&data.st_ctime);
+    nd->year = ft_date(nd);
     return ((int)data.st_blocks);
 }
 
