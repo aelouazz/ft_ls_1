@@ -253,8 +253,8 @@ int     main(int ac, char **av)
 			{
 				while (i < ac)
 					{
-						if ((av[i][0] == '-' && check_flag(&av[i][1]) != 0)  ||
-						(av[i][0] == '-'  && av[i][1] == '\0'))
+						if ((av[i][0] == '-' && check_flag(&av[i][1]) != 0)
+						|| (av[i][0] == '-'  && av[i][1] == '\0'))
 							error_msg(av[i][0]);
 						else
 							i++;
