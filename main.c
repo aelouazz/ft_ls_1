@@ -172,37 +172,37 @@ void	ft_print_a(t_node  *nd)
 size_t	biggest_link(t_node  *nd)
 {
 	size_t i;
-	
+
 	i = 0;
 	while (nd->next)
 	{
 		if (i <= ft_strlen(ft_itoa(nd->nb_links)))
 			i = ft_strlen(ft_itoa(nd->nb_links));
-			nd = nd->next;
+		nd = nd->next;
 	}
 	return (i);
 }
 size_t	biggest_size(t_node  *nd)
 {
 	size_t i;
-	
+
 	i = 0;
 	while (nd->next)
 	{
 		if (i <= ft_strlen(ft_itoa(nd->size)))
 			i = ft_strlen(ft_itoa(nd->size));
-			nd = nd->next;
+		nd = nd->next;
 	}
 	return (i);
 }
 void	ft_print_ls(t_node  *nd)
 {
 		size_t nb;
-		size_t sz;
+		//size_t sz;
 		size_t i;
 
 		nb = biggest_link(nd);
-		sz = biggest_size(nd);
+		//sz = biggest_size(nd);
 		ft_putstr("total ");
 		ft_putnbr(nd->total);
 		ft_putendl("");
@@ -239,7 +239,7 @@ int     main(int ac, char **av)
 {
 	int 	i;
 	t_node  *nd;
-	
+
 	nd = NULL;
 	i = 1;
 	if (ac < 2)
@@ -253,13 +253,13 @@ int     main(int ac, char **av)
 			{
 				while (i < ac)
 					{
-						if ((av[i][0] == '-' && check_flag(&av[i][1]) != 0)  || 
+						if ((av[i][0] == '-' && check_flag(&av[i][1]) != 0)  ||
 						(av[i][0] == '-'  && av[i][1] == '\0'))
 							error_msg(av[i][0]);
 						else
 							i++;
 					}
-			
+
 				nd = ft_alloc_list(".");
 				get_flags(av, nd);
 				ft_print_ls(nd);
