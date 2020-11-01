@@ -66,22 +66,41 @@ void	get_flags(char **av, t_node  *nd)
 	nd->flags[k] = '\0';
 }
 
-int		path_or_flags(char **av)
+int		path_or_flags(int ac ,char **av)
 {
 	int i;
 
 	i = 1;
-	if ((opendir(av[i]) != NULL))
+	while (i < ac)
+	{
+		if ((opendir(av[i]) != NULL))
 			{
 				while ((opendir(av[i]) != NULL))
 					{
 						i++;
-						if ((opendir(av[i]) == NULL) && av[i])
+						if ((opendir(av[i]) == NULL) && av[i] != NULL)
 							error_msg_diroctory(av[i]);
 					}
 				return (1);
 			}
+			i++;
+	}
 	return (0);
+}
+char		*path_first(char **av)
+{
+	int i;
+
+	i = 1;
+	while (av[i])
+	{
+		if ((opendir(av[i]) != NULL))
+			{
+				return (av[i]);
+			}
+			i++;
+	}
+	return (".");
 }
 size_t		ft_biggest_name_charachters(t_node *nd)
 {
@@ -230,24 +249,26 @@ int     main(int ac, char **av)
 	}
 	else
 	{
-		if (path_or_flags(av) == 0)
+		if (path_or_flags(ac, av) == 0)
 			{
 				while (i < ac)
 					{
-						if (av[i][0] != '-' || (av[i][0] == '-' && check_flag(&av[i][1]) != 0)  || 
+						if ((av[i][0] == '-' && check_flag(&av[i][1]) != 0)  || 
 						(av[i][0] == '-'  && av[i][1] == '\0'))
 							error_msg(av[i][0]);
 						else
 							i++;
 					}
-				
+			
 				nd = ft_alloc_list(".");
 				get_flags(av, nd);
 				ft_print_ls(nd);
 			}
 		else
 	    	{
-				nd = ft_alloc_list(av[1]);
+				nd = ft_alloc_list(path_first(av));
+				ft_putstr(path_first(av));
+				ft_putstr(":\n");
 				ft_print_ls(nd);
 			}
 	}
