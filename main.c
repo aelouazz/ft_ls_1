@@ -198,11 +198,11 @@ size_t	biggest_size(t_node  *nd)
 void	ft_print_ls(t_node  *nd)
 {
 		size_t nb;
-		//size_t sz;
+		size_t sz;
 		size_t i;
 
 		nb = biggest_link(nd);
-		//sz = biggest_size(nd);
+		sz = biggest_size(nd);
 		ft_putstr("total ");
 		ft_putnbr(nd->total);
 		ft_putendl("");
@@ -219,7 +219,7 @@ void	ft_print_ls(t_node  *nd)
 			ft_putstr(nd->group);
 			i = 0;
 			ft_putstr(" ");
-			while ((i++ + ft_strlen(ft_itoa(nd->size))) <= nb)
+			while ((i++ + ft_strlen(ft_itoa(nd->size))) <= sz)
 				ft_putstr(" ");
 			ft_putnbr(nd->size);
 			ft_putchar(nd->SZ);
